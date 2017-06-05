@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/graphql/testutil"
-	"github.com/sogko/golang-relay-starter-kit/data"
+	"projects/golang-relay-starter-kit/data"
 	"io/ioutil"
 	"log"
 	"os"

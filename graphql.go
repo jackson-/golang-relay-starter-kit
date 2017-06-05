@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/graphql-go/handler"
-	"github.com/sogko/golang-relay-starter-kit/data"
+	"projects/golang-relay-starter-kit/data"
 	"log"
 	"net/http"
 )
