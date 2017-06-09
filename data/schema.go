@@ -1,51 +1,45 @@
 package data
 
 import (
-  "fmt"
   "github.com/graphql-go/graphql"
   "github.com/graphql-go/relay"
 )
 
-var postType *graphql.Object
-var postList *graphql.Object
+var operationType *graphql.Object
+var operationList *graphql.Object
 var queryType *graphql.Object
 var Schema graphql.Schema
 
 func init() {
-  postType = graphql.NewObject(graphql.ObjectConfig{
-    Name: "Post",
+
+  operationType = graphql.NewObject(graphql.ObjectConfig{
+    Name: "Operation",
     Fields: graphql.Fields{
       // Define `id` field as a Relay GlobalID field.
       // It helps with translating your GraphQL object's id into a global id
       // For eg:
-      //  For a `Post` type, with an id of `1`, it's global id will be `UG9zdDox`
-      //  which is a base64 encoded version of `Post:1` string
+      //  For a `Operation` type, with an id of `1`, it's global id will be `UG9zdDox`
+      //  which is a base64 encoded version of `Operation:1` string
       // We will explore more in the next part of this series.
-      "id": relay.GlobalIDField("Post", nil),
+      "id": relay.GlobalIDField("Operation", nil),
       "title": &graphql.Field{
-        Type: graphql.String,
-      },
-      "text": &graphql.Field{
-        Type: graphql.String,
-      },
-      "author": &graphql.Field{
         Type: graphql.String,
       },
     },
   })
 
-  postList = graphql.NewObject(graphql.ObjectConfig{
-    Name: "PostList",
+  operationList = graphql.NewObject(graphql.ObjectConfig{
+    Name: "OperationList",
     Fields: graphql.Fields{
       // Define `id` field as a Relay GlobalID field.
       // It helps with translating your GraphQL object's id into a global id
       // For eg:
-      //  For a `Post` type, with an id of `1`, it's global id will be `UG9zdDox`
-      //  which is a base64 encoded version of `Post:1` string
+      //  For a `Operation` type, with an id of `1`, it's global id will be `UG9zdDox`
+      //  which is a base64 encoded version of `Operation:1` string
       // We will explore more in the next part of this series.
-      "id": relay.GlobalIDField("PostList", nil),
-      "posts": &graphql.Field{
-        Type: graphql.NewList(postType),
+      "id": relay.GlobalIDField("OperationList", nil),
+      "operations": &graphql.Field{
+        Type: graphql.NewList(operationType),
       },
     },
   })
@@ -53,17 +47,16 @@ func init() {
   queryType = graphql.NewObject(graphql.ObjectConfig{
     Name: "Query",
     Fields: graphql.Fields{
-      "latestPost": &graphql.Field{
-        Type: postType,
+      "getOperation": &graphql.Field{
+        Type: operationType,
         Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-          return GetLatestPost(), nil
+          return GetOperation(), nil
         },
       },
-      "allPosts": &graphql.Field{
-        Type: postList,
+      "allOperations": &graphql.Field{
+        Type: operationList,
         Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-          fmt.Printf("%v", GetAllPosts().Posts)
-          return GetAllPosts(), nil
+          return GetAllOperations(), nil
         },
       },
     },

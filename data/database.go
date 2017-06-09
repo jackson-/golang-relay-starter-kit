@@ -1,55 +1,63 @@
 package data
 
 // Data model structs
-type Post struct {
+
+type Operation struct {
 	Id   string `json:"id"`
 	Title string `json:"title"`
-	Text string `json:"text"`
-	Author string `json:"author"`
 }
 
-type PostList struct {
+type OperationList struct {
 	Id   string `json:"id"`
-	Posts []Post `json:"posts"`
+	Operations []Operation `json:"operations"`
 }
 
 // Mock data
-var latestPost = &Post{
-	Id: "1",
-	Title: "Illest Article Alive",
-	Text: "This some article about something",
-	Author:"Devin Jackson",
+
+var currentOperation = &Operation{
+	Id: "3",
+	Title: "Max",
 }
 
-var allPosts = &PostList{
+var allOperations = &OperationList{
 		Id:"1",
-		Posts:[]Post {
+		Operations:[]Operation {
 		{
 			Id: "1",
-			Title: "Illest Article Alive",
-			Text: "This some article about some ill stuff",
-			Author:"Devin Jackson",
+			Title: "Mean",
 		},
 		{
 			Id: "2",
-			Title: "Dopest Article Alive",
-			Text: "This some article about dope stuff",
-			Author:"Devin Jackson",
+			Title: "Median",
 		},
 		{
 			Id: "3",
-			Title: "Newest Article Alive",
-			Text: "This some article about new stuff",
-			Author:"Devin Jackson",
+			Title: "Max",
+		},
+		{
+			Id: "4",
+			Title: "Min",
+		},
+		{
+			Id: "5",
+			Title: "STD",
+		},
+		{
+			Id: "6",
+			Title: "Sum",
+		},
+		{
+			Id: "7",
+			Title: "Product",
 		},
 	},
 }
 
 // Data getters/setters
-func GetLatestPost() *Post {
-	return latestPost
+func GetOperation() *Operation {
+	return currentOperation
 }
 
-func GetAllPosts() *PostList{
-	return allPosts
+func GetAllOperations() *OperationList{
+	return allOperations
 }

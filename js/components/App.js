@@ -3,21 +3,21 @@ import Relay from 'react-relay';
 
 class App extends React.Component {
 
-  createPostList(posts){
+  createOpList(ops){
     const display = []
-    posts.forEach((p) => {
-      display.push(<li key={p.id}><a key={p.id} href={p.id}>{p.title}</a> By: {p.author}</li>)
+    ops.forEach((o) => {
+      display.push(<li key={o.id}>{o.title}</li>)
     })
     return display
   }
 
   render() {
-    const posts = this.props.allPosts ? this.createPostList(this.props.allPosts.posts) : []
+    const operations = this.props.allOperations ? this.createOpList(this.props.allOperations.operations) : []
     return (
       <div>
-        <h1>Articles</h1>
+        <h1>Operations</h1>
         <ul>
-          {posts}
+          {operations}
         </ul>
       </div>
     );
@@ -26,21 +26,12 @@ class App extends React.Component {
 
 export default Relay.createContainer(App, {
   fragments: {
-    latestPost: () => Relay.QL`
-      fragment on Post {
+    allOperations: () => Relay.QL`
+      fragments on OperationList {
         id
-        title
-        text
-        author
-      }
-    `,
-    allPosts: () => Relay.QL`
-      fragments on PostList {
-        id
-        posts{
+        operations{
           id
           title
-          author
         }
       }
     `,
