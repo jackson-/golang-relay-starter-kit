@@ -1,11 +1,13 @@
 package data
 
 import (
+  "fmt"
   "github.com/graphql-go/graphql"
   "github.com/graphql-go/relay"
 )
 
 var postType *graphql.Object
+var postList *graphql.Object
 var queryType *graphql.Object
 var Schema graphql.Schema
 
@@ -20,8 +22,30 @@ func init() {
       //  which is a base64 encoded version of `Post:1` string
       // We will explore more in the next part of this series.
       "id": relay.GlobalIDField("Post", nil),
+      "title": &graphql.Field{
+        Type: graphql.String,
+      },
       "text": &graphql.Field{
         Type: graphql.String,
+      },
+      "author": &graphql.Field{
+        Type: graphql.String,
+      },
+    },
+  })
+
+  postList = graphql.NewObject(graphql.ObjectConfig{
+    Name: "PostList",
+    Fields: graphql.Fields{
+      // Define `id` field as a Relay GlobalID field.
+      // It helps with translating your GraphQL object's id into a global id
+      // For eg:
+      //  For a `Post` type, with an id of `1`, it's global id will be `UG9zdDox`
+      //  which is a base64 encoded version of `Post:1` string
+      // We will explore more in the next part of this series.
+      "id": relay.GlobalIDField("PostList", nil),
+      "posts": &graphql.Field{
+        Type: graphql.NewList(postType),
       },
     },
   })
@@ -33,6 +57,13 @@ func init() {
         Type: postType,
         Resolve: func(p graphql.ResolveParams) (interface{}, error) {
           return GetLatestPost(), nil
+        },
+      },
+      "allPosts": &graphql.Field{
+        Type: postList,
+        Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+          fmt.Printf("%v", GetAllPosts().Posts)
+          return GetAllPosts(), nil
         },
       },
     },
